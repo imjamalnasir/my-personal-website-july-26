@@ -62,7 +62,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Alex Rivera — AI Engineer, Full-Stack Developer & Product Designer" },
+      { title: "Jamal Nasir — Design Lead | Senior UI/UX Designer | Front-End Developer | Agentic AI Explorer" },
       { name: "description", content: "Premium portfolio of Alex Rivera — designing experiences, engineering products, and building intelligent AI solutions for modern teams." },
       { name: "author", content: "Alex Rivera" },
       { property: "og:title", content: "Alex Rivera — AI Engineer & Product Designer" },
