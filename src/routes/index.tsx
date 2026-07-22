@@ -9,6 +9,11 @@ import {
 } from "lucide-react";
 import avatarImg from "@/assets/avatar.jpg";
 import myPic from "@/assets/mypic.jpg";
+import resumePdf from "@/assets/Jamal Nasir - UIUX Designer - v2.pdf";
+import { CaseStudyDialog } from "@/components/case-study-dialog";
+import { ProjectCardMedia } from "@/components/project-card-media";
+import { FILTERS, PROJECTS } from "@/data/projects";
+import type { Project } from "@/data/projects";
 
 export const Route = createFileRoute("/")({
   component: Portfolio,
@@ -100,7 +105,7 @@ function Nav() {
           ))}
         </ul>
         <a href="#contact" className="hidden md:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[color:var(--electric)] to-[color:var(--purple)] px-4 py-2 text-sm font-medium text-white shadow-[var(--shadow-glow)] transition-transform hover:scale-105">
-          Hire Me <ArrowRight className="h-4 w-4" />
+          Connect with Me <ArrowRight className="h-4 w-4" />
         </a>
         <button onClick={() => setOpen(!open)} className="md:hidden text-foreground" aria-label="Menu">
           <Layers className="h-5 w-5" />
@@ -172,6 +177,33 @@ function Section({ id, eyebrow, title, subtitle, children }: {
   );
 }
 
+/* ---------- Social links ---------- */
+const SOCIAL_LINKS = [
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/imjamalnasir" },
+  { icon: Github, label: "GitHub", href: "https://github.com/imjamalnasir" },
+  { icon: Palette, label: "Behance", href: "https://www.behance.net/imjamalnasir" },
+  { icon: Mail, label: "Email", href: "mailto:imjamalnasir@gmail.com" },
+] as const;
+
+function SocialIcons({ className = "mt-8" }: { className?: string }) {
+  return (
+    <div className={`flex flex-wrap justify-center gap-3 ${className}`}>
+      {SOCIAL_LINKS.map(({ icon: Icon, label, href }) => (
+        <a
+          key={label}
+          href={href}
+          target={href.startsWith("mailto:") ? undefined : "_blank"}
+          rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+          aria-label={label}
+          className="glass grid h-10 w-10 place-items-center rounded-full transition-all hover:scale-110 hover:bg-white/10"
+        >
+          <Icon className="h-4 w-4" />
+        </a>
+      ))}
+    </div>
+  );
+}
+
 /* ---------- Hero ---------- */
 function Hero() {
   return (
@@ -192,38 +224,31 @@ function Hero() {
              Current Available - Open to work.
           </motion.span>
           <h1 className="text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl md:text-7xl">
-            Hi, I'm <span className="text-gradient">Jamal Nasir</span>
+          <span className="text-gradient">Designer . Developer . Explorer</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-6xl text-lg text-muted-foreground sm:text-xl">
-          Design Lead | Senior UI/UX Designer | Front-End Developer | Agentic AI Explorer
+          <p className="mx-auto mt-5 max-w-6xl text-lg  sm:text-xl">
+          Design Lead <span className="text-gradient">| </span> Senior UI/UX Designer <span className="text-gradient">| </span> Front-End Developer <span className="text-gradient">| </span> Agentic AI Explorer
           </p>
           
           <p className="mx-auto mt-6 max-w-4xl text-sm text-muted-foreground/90 sm:text-base">
-          Experienced Design Lead, Senior UI/UX Designer, Front-End & Full-Stack JavaScript Developer with over 10 years of experience designing and developing enterprise web and mobile applications, Skilled in leveraging AI-powered design tools and AI-assisted design workflows to accelerate ideation, UX research, wireframing, prototyping,.
+          Experienced Design Lead, Senior UI/UX Designer, Front-End & Full-Stack JavaScript Developer with over 10 years of experience designing and developing enterprise web and mobile applications, Skilled in leveraging AI-powered design tools and AI-assisted design workflows to accelerate ideation, UX research, wireframing, prototyping.
             </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a href="#work" className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[color:var(--electric)] to-[color:var(--purple)] px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition-transform hover:scale-[1.03]">
               View Portfolio <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
-            <a href="#" className="glass inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors hover:bg-white/10">
+            <a
+              href={resumePdf}
+              download="Jamal Nasir - UIUX Designer - v2.pdf"
+              className="glass inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors hover:bg-white/10"
+            >
               <Download className="h-4 w-4" /> Download Resume
             </a>
             <a href="#contact" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3 text-sm font-semibold transition-colors hover:border-white/30 hover:bg-white/5">
               Hire Me
             </a>
           </div>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {[
-              { icon: Linkedin, label: "LinkedIn" }, { icon: Github, label: "GitHub" },
-              { icon: Palette, label: "Behance" }, { icon: Sparkles, label: "Dribbble" },
-              { icon: Twitter, label: "Twitter" }, { icon: Layers, label: "Medium" },
-              { icon: Mail, label: "Email" },
-            ].map(({ icon: Icon, label }) => (
-              <a key={label} href="#" aria-label={label} className="glass grid h-10 w-10 place-items-center rounded-full transition-all hover:scale-110 hover:bg-white/10">
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
-          </div>
+          <SocialIcons />
         </motion.div>
       </div>
     </section>
@@ -233,9 +258,8 @@ function Hero() {
 /* ---------- About ---------- */
 function About() {
   const stats = [
-    { v: "8+", l: "Years Experience" }, { v: "100+", l: "Projects Completed" },
-    { v: "50+", l: "Happy Clients" }, { v: "20+", l: "AI Solutions Built" },
-    { v: "15+", l: "Industries Served" }, { v: "99%", l: "Client Satisfaction" },
+    { v: "10+", l: "Years Experience" }, { v: "50+", l: "Projects Completed" },
+    { v: "99%", l: "Client Satisfaction" },
   ];
   return (
     <Section id="about" eyebrow="About" title="Crafting Digital Excellence" subtitle="Experienced Design Lead, Senior UI/UX Designer, Front-End & Full-Stack JavaScript Developer with over 10 years of experience ">
@@ -274,7 +298,7 @@ const EXPERTISE = [
   { icon: Database, title: "Databases", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase", "Supabase", "Redis"] },
   { icon: Brain, title: "AI & ML", items: ["Machine Learning", "Deep Learning", "NLP", "Computer Vision", "LLM Integration", "LangChain", "RAG", "Fine-Tuning", "Vector DBs"] },
   { icon: Bot, title: "Agentic AI", items: ["AI Agents", "Multi-Agent Systems", "MCP", "Tool Calling", "CrewAI", "AutoGen", "LangGraph", "OpenAI", "Gemini", "Claude"] },
-  { icon: Cloud, title: "DevOps & Cloud", items: ["Docker", "Kubernetes", "AWS", "Azure", "GCP", "CI/CD", "GitHub Actions", "Linux", "Nginx"] },
+  /*{ icon: Cloud, title: "DevOps & Cloud", items: ["Docker", "Kubernetes", "AWS", "Azure", "GCP", "CI/CD", "GitHub Actions", "Linux", "Nginx"] },*/
 ];
 function Expertise() {
   return (
@@ -310,28 +334,22 @@ function Expertise() {
 }
 
 /* ---------- Projects ---------- */
-const PROJECTS = [
-  { cat: "AI", title: "Nova — Autonomous Research Agent", desc: "Multi-agent research assistant with tool calling, memory, and citations.", tech: ["LangGraph", "Next.js", "Postgres"], color: "from-indigo-500 to-purple-500" },
-  { cat: "UI/UX", title: "Orbit Banking App", desc: "End-to-end redesign for a neo-bank serving 2M users across LATAM.", tech: ["Figma", "Design Systems"], color: "from-cyan-400 to-blue-500" },
-  { cat: "Front-End", title: "Helix Analytics Dashboard", desc: "Realtime dashboard with 60fps charts and rich micro-interactions.", tech: ["React", "D3", "Framer Motion"], color: "from-fuchsia-500 to-pink-500" },
-  { cat: "Back-End", title: "Photon API Platform", desc: "GraphQL platform handling 1B events/day with sub-30ms p99 latency.", tech: ["Node.js", "GraphQL", "Redis"], color: "from-emerald-400 to-cyan-500" },
-  { cat: "ML", title: "Vision QA Pipeline", desc: "Computer vision defect detection lowering scrap rate by 34%.", tech: ["PyTorch", "FastAPI"], color: "from-orange-400 to-rose-500" },
-  { cat: "Agentic AI", title: "Atlas Sales Copilot", desc: "Agent that qualifies leads, drafts outreach and syncs CRM autonomously.", tech: ["CrewAI", "OpenAI", "Supabase"], color: "from-violet-500 to-indigo-500" },
-];
-const FILTERS = ["All", "UI/UX", "Front-End", "Back-End", "AI", "ML", "Agentic AI"];
+const FEATURED_PROJECTS = PROJECTS.slice(0, 6);
+
 function Projects() {
   const [f, setF] = useState("All");
-  const shown = f === "All" ? PROJECTS : PROJECTS.filter((p) => p.cat === f);
+  const [caseStudy, setCaseStudy] = useState<Pick<Project, "title" | "caseStudyImage"> | null>(null);
+  const shown = f === "All" ? FEATURED_PROJECTS : FEATURED_PROJECTS.filter((p) => p.cat === f);
   return (
     <Section id="work" eyebrow="Selected Work" title="Featured Projects" subtitle="Selected products built at the intersection of design, engineering and AI.">
-      <div className="mb-10 flex flex-wrap justify-center gap-2">
+      {/*<div className="mb-10 flex flex-wrap justify-center gap-2">
         {FILTERS.map((x) => (
           <button key={x} onClick={() => setF(x)}
             className={`rounded-full border px-4 py-2 text-xs font-medium transition-all ${
               f === x ? "border-transparent bg-gradient-to-r from-[color:var(--electric)] to-[color:var(--purple)] text-white shadow-[var(--shadow-glow)]" : "border-white/10 bg-white/5 text-muted-foreground hover:border-white/25 hover:text-foreground"
             }`}>{x}</button>
         ))}
-      </div>
+      </div>*/}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {shown.map((p, i) => (
@@ -339,14 +357,23 @@ function Projects() {
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
               transition={{ delay: i * 0.05 }} whileHover={{ y: -6 }}
               className="glass group overflow-hidden rounded-3xl"
+              role="button"
+              tabIndex={0}
+              aria-label={`Open case study for ${p.title}`}
+              onClick={() => setCaseStudy({ title: p.title, caseStudyImage: p.caseStudyImage })}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setCaseStudy({ title: p.title, caseStudyImage: p.caseStudyImage });
+                }
+              }}
             >
-              <div className={`relative aspect-[4/3] overflow-hidden bg-gradient-to-br ${p.color}`}>
-                <div className="absolute inset-0 grid-bg opacity-30" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Rocket className="h-16 w-16 text-white/40 transition-transform duration-700 group-hover:scale-110" />
-                </div>
-                <span className="absolute left-3 top-3 rounded-full bg-black/40 px-3 py-1 text-xs font-medium text-white backdrop-blur">{p.cat}</span>
-              </div>
+              <ProjectCardMedia
+                color={p.color}
+                category={p.cat}
+                imageSrc={p.caseStudyImage}
+                title={p.title}
+              />
               <div className="p-6">
                 <h3 className="text-lg font-semibold">{p.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
@@ -355,16 +382,44 @@ function Projects() {
                     <span key={t} className="rounded-md bg-white/5 px-2 py-0.5 text-[11px] text-muted-foreground">{t}</span>
                   ))}
                 </div>
-                <div className="mt-5 flex flex-wrap gap-2 text-xs">
-                  <a href="#" className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1.5 hover:bg-white/15">Live <ArrowUpRight className="h-3 w-3" /></a>
-                  <a href="#" className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1.5 hover:bg-white/15"><Github className="h-3 w-3" /> Code</a>
-                  <a href="#" className="inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1.5 hover:bg-white/5">Case Study</a>
-                </div>
+                {/*<div className="mt-5 flex flex-wrap gap-2 text-xs">
+                  <a
+                    href="#"
+                    className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1.5 hover:bg-white/15"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Live <ArrowUpRight className="h-3 w-3" />
+                  </a>
+                  <a
+                    href="#"
+                    className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1.5 hover:bg-white/15"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Github className="h-3 w-3" /> Code
+                  </a>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCaseStudy({ title: p.title, caseStudyImage: p.caseStudyImage });
+                    }}
+                    className="inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1.5 hover:bg-white/5"
+                  >
+                    Case Study
+                  </button>
+                </div>*/}
               </div>
             </motion.article>
           ))}
         </AnimatePresence>
       </div>
+
+      <CaseStudyDialog
+        open={caseStudy !== null}
+        onOpenChange={(open) => !open && setCaseStudy(null)}
+        title={caseStudy?.title ?? ""}
+        imageSrc={caseStudy?.caseStudyImage}
+      />
     </Section>
   );
 }
@@ -465,9 +520,9 @@ function Experience() {
 /* ---------- Skills bars ---------- */
 const SKILL_GROUPS = [
   { name: "Design", items: [["Figma", 98], ["Design Systems", 95], ["Prototyping", 92]] },
-  { name: "Front-End", items: [["React / Next.js", 97], ["TypeScript", 95], ["Tailwind", 96]] },
-  { name: "Back-End", items: [["Node.js", 94], ["Python", 92], ["GraphQL", 88]] },
-  { name: "AI/ML", items: [["LLM Integration", 96], ["LangChain / LangGraph", 93], ["PyTorch", 84]] },
+  { name: "Front-End", items: [["React / Next.js", 72], ["Shadcn UI", 92], ["Tailwind", 96]] },
+  { name: "Back-End", items: [["Node.js", 56], ["Python", 66], ["MySQL", 58]] },
+  { name: "AI/ML", items: [["LLM Integration", 46], ["LangChain / LangGraph", 33], ["RAG", 34]] },
 ] as const;
 function Skills() {
   return (
@@ -508,9 +563,10 @@ function Skills() {
 
 /* ---------- Services ---------- */
 const SERVICES = [
+  
+  { icon: Palette, t: "Design", items: ["UI Design", "UX Design", "Mobile Apps", "Responsive-First Development", "API Integration"] },
+  { icon: Rocket, t: "Development", items: ["HTML5, CSS3 & JavaScrip", "React.js & Next.js", "API Development", "Cloud Deployment", "Database Architecture"] },
   { icon: Bot, t: "AI Services", items: ["AI Chatbots", "Agentic AI", "LLM Applications", "AI Automation", "Recommendation Systems"] },
-  { icon: Palette, t: "Design", items: ["UI Design", "UX Design", "Mobile Apps", "SaaS Dashboards", "Enterprise Systems"] },
-  { icon: Rocket, t: "Development", items: ["Website Development", "SaaS Platforms", "API Development", "Cloud Deployment", "Database Architecture"] },
 ];
 function Services() {
   return (
@@ -695,13 +751,14 @@ function CTA() {
             Whether it's a digital product, AI solution, SaaS platform, or enterprise application — I'm ready to help transform your vision into reality.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[color:var(--electric)] to-[color:var(--purple)] px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition-transform hover:scale-105">
-              Start a Project <ArrowRight className="h-4 w-4" />
+           <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[color:var(--electric)] to-[color:var(--purple)] px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition-transform hover:scale-105">
+           <Phone className="h-4 w-4" /> +92 3228287632 
             </a>
             <a href="#contact" className="glass inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold hover:bg-white/10">
-              <Calendar className="h-4 w-4" /> Schedule a Call
+              <Mail className="h-4 w-4" /> imjamalnasir@gmail.com
             </a>
           </div>
+          <SocialIcons className="mt-6" />
         </div>
       </motion.div>
     </section>
